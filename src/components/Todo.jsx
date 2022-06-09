@@ -4,8 +4,10 @@ const Todo = (props) => {
     return (
         <div>
             <div id='root'>
-                <p>{props.values}</p>
-                <button>삭제</button>
+                <span>{props.item.text}</span>
+                <button onClick={() => props.delete(props.item.id)}>
+                    삭제
+                </button>
             </div>
         </div>
     )

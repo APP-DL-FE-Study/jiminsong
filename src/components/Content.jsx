@@ -10,10 +10,17 @@ const Content = () => {
     const inputRef = useRef()
     const handleClick = () => {
         const newTodo = {
-            id: Date.now,
+            id: Date.now(),
             text: inputRef.current.value,
         }
-        setTodo([...todo, newTodo])
+        const text = inputRef.current.value
+        if (text === '') {
+            return
+        } else {
+            setTodo([...todo, newTodo])
+            setInputText('')
+            inputRef.current.value = ''
+        }
     }
 
     const handleChange = (e) => {
@@ -21,6 +28,13 @@ const Content = () => {
         setInputText(e.target.value)
     }
 
+    const handleDelete = (id) => {
+        const newArr = todo.filter((a) => {
+            return a.id !== id
+        })
+
+        setTodo(newArr)
+    }
     return (
         <>
             <h1>Content</h1>
@@ -32,8 +46,8 @@ const Content = () => {
                 ></input>
                 <button onClick={handleClick}>추가</button>
                 <p>{inputText}</p>
-                {todo.map((value, index) => (
-                    <Todo key={index} values={value.text} />
+                {todo.map((item, index) => (
+                    <Todo key={index} item={item} delete={handleDelete} />
                 ))}
             </div>
         </>
